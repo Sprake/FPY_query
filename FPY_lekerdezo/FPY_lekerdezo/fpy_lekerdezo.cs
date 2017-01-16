@@ -25,6 +25,10 @@ namespace FPY_lekerdezo
 
         private void fpy_lekerdezo_Load(object sender, EventArgs e)
         {
+            
+            System.IO.FileInfo file = new System.IO.FileInfo(@"C:\temp\");
+            file.Directory.Create();
+        
             datepicker_from.Value = DateTime.Today.AddDays(-1);
             datepicker_to.Value = DateTime.Today;
 
