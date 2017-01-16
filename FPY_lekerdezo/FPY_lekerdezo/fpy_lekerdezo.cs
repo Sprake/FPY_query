@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,10 +25,9 @@ namespace FPY_lekerdezo
 
         private void fpy_lekerdezo_Load(object sender, EventArgs e)
         {
-            
             System.IO.FileInfo file = new System.IO.FileInfo(@"C:\temp\");
             file.Directory.Create();
-        
+
             datepicker_from.Value = DateTime.Today.AddDays(-1);
             datepicker_to.Value = DateTime.Today;
 
@@ -175,10 +174,10 @@ namespace FPY_lekerdezo
                 MessageBox.Show(ex.Message.ToString());
             }
         }
-        
+
         private void ismetlodeskiszurese()
         {
-            if (tableswitch == true) result_dgv.Sort(this.result_dgv.Columns["Date"], ListSortDirection.Descending); 
+            if (tableswitch == true) result_dgv.Sort(this.result_dgv.Columns["Date"], ListSortDirection.Descending);
             final_dgv.Rows.Clear();
             try
             {
@@ -354,7 +353,7 @@ namespace FPY_lekerdezo
                 if (!File.Exists(@"C:\temp\" + date + "_" + tipus + ".csv"))
                 {
                     string csvbase = tipus_combobox.Text.ToString() + "\r\n"
-                      + Convert.ToString(datepicker_from.Text).Substring(0, 10) + "\r\n"
+                      + Convert.ToString(datepicker_from.Text).Substring(0, 10) + ";Product OK on Labeling; Connector Screwing; Grounding Cable Screwing; Leakage Test; Product OK on Main board placement; Cable lug Screwing; Heatsink Screwing; Board screwing; Cover Screwing; Housing Leakage test; Soldering AOI; Gluing\r\n"
                       + "Operation_ID: ; \r\n"
                       + "Tesztelt darabszam: ; \r\n"
                       + "Elsore kiesett: ;\r\n"
@@ -365,50 +364,11 @@ namespace FPY_lekerdezo
                     File.WriteAllText(@"C:\temp\" + date + "_" + tipus + ".csv", csvbase);
                 }
 
-                string[] ops = { "12030", "12060", "10615", "10980", "10990", "11000"};
-
                 string[] house_assy = { "10401", "4010", "4020", "4040" };
-                string[] assembly = { "10900", "9015", "9020", "9030", "9050", "9060"};
-                string[] soldering = {"6080", "10614"};
-
+                string[] assembly = { "10900", "9015", "9020", "9030", "9050", "9060" };
+                string[] soldering = { "6080", "10614" };
                 
-
-
-                for (int i = 0; i < ops.Length; i++)
-                {
-                    tableswitch = false;
-                    //MessageBox.Show(ops[i]);
-
-                    string query = "Select HeatSinkData.HeatSink_ID as ID, HeatSinkData.Workstation, HeatSinkData.Operation_ID, Operations.Operation_Msg, HeatSinkData.Result, HeatSinkData.Value, HeatSinkData.Limit_Min, HeatSinkData.Limit_Max, HeatSinkData.Date, HeatSinkData.Operator, HeatSinkData.Note  from [dbo].[HeatSinkData] JOIN [dbo].[Operations] ON HeatSinkData.Operation_ID=Operations.Operation_ID INNER JOIN [dbo].[Main] ON HeatSinkData.HeatSink_ID=main.HeatSink_ID WHERE HeatSinkData.Date BETWEEN '" + datepicker_from.Text + "' AND '" + datepicker_to.Text + "' AND Main.Type = '" + Convert.ToString(tipus_combobox.Text) + "' AND HeatSinkData.Operation_ID='" + ops[i] + "' UNION Select HousingData.Housing_ID as ID, HousingData.Workstation, HousingData.Operation_ID, Operations.Operation_Msg, HousingData.Result, HousingData.Value, HousingData.Limit_Min, HousingData.Limit_Max, HousingData.Date, HousingData.Operator, HousingData.Note  from [dbo].[HousingData] JOIN [dbo].[Operations] ON HousingData.Operation_ID=Operations.Operation_ID INNER JOIN [dbo].[Main] ON HousingData.Housing_ID=main.Housing_ID WHERE HousingData.Date BETWEEN '" + datepicker_from.Text + "' AND '" + datepicker_to.Text + "' AND Main.Type = '" + Convert.ToString(tipus_combobox.Text) + "' AND HousingData.Operation_ID = '" + ops[i] + "'";
-                    if (i == 0)
-                    {
-                        List<string> newColumnData = new List<string>() { "D" };
-                        List<string> lines = File.ReadAllLines(@"C:\temp\" + date + "_" + tipus + ".csv").ToList();
-                        lines[1] += ";Komponens AOI;Forrasztas AOI;PCBA Teszter;HiPOT Teszter;Burn-in Teszter;EOL Teszter; ;Product OK on Labeling;Connector Screwing;Grounding Cable Screwing;Leakage Test;Product OK on Main board placement;Cable lug Screwing;Heatsink Screwing;Board screwing;Cover Screwing;Housing Leakage test;Soldering AOI;Gluing";
-                        File.WriteAllLines(@"C:\temp\" + date + "_" + tipus + ".csv", lines);
-                    }
-                    eredmenyek_lekerdezese1(query, result_dgv);
-                    ismetlodeskiszurese();
-                    fpyellenorzese(ops[i]);
-                    tableswitch = true;
-                    ismetlodeskiszurese();
-                    fpyellenorzese(ops[i]);
-
-
-                    if (i == 5)
-                    {
-                        List<string> newColumnData = new List<string>() { "D" };
-                        List<string> lines = File.ReadAllLines(@"C:\temp\" + date + "_" + tipus + ".csv").ToList();
-                        lines[2] += " ;";
-                        lines[3] += " ;";
-                        lines[4] += " ;";
-                        lines[5] += " ;";
-                        lines[6] += " ;";
-                        lines[7] += " ;";
-                        lines[8] += " ;";
-                        File.WriteAllLines(@"C:\temp\" + date + "_" + tipus + ".csv", lines);
-                    }
-                }
+                
                 for (int j = 0; j < house_assy.Length; j++)
                 {
                     tableswitch = false;
@@ -449,5 +409,54 @@ namespace FPY_lekerdezo
                 MessageBox.Show(ex.Message.ToString());
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tableswitch = false;
+            try
+            {
+                string date = Convert.ToString(datepicker_from.Text).Substring(0, 10).Replace("/", "_");
+                string tipus = tipus_combobox.Text.ToString();
+                /*****************Create CSV******************/
+                if (!File.Exists(@"C:\temp\" + date + "_" + tipus + ".csv"))
+                {
+                    string csvbase = tipus_combobox.Text.ToString() + "\r\n"
+                      + Convert.ToString(datepicker_from.Text).Substring(0, 10) + "\r\n"
+                      + "Operation_ID: ; \r\n"
+                      + "Tesztelt darabszam: ; \r\n"
+                      + "Elsore kiesett: ;\r\n"
+                      + "FPY: ;\r\n"
+                      + "TLR: ;\r\n"
+                      + "Valos kieses: ;\r\n"
+                      + "Valos kieses [%] : ;\r\n\r\n";
+                    File.WriteAllText(@"C:\temp\" + date + "_" + tipus + ".csv", csvbase);
+                }
+
+                string[] ops = { "12030", "12060", "10615", "10980", "10990", "11000" };
+
+                for (int i = 0; i < ops.Length; i++)
+                {
+                    tableswitch = false;
+                    //MessageBox.Show(ops[i]);
+
+                    string query = "Select HeatSinkData.HeatSink_ID as ID, HeatSinkData.Workstation, HeatSinkData.Operation_ID, Operations.Operation_Msg, HeatSinkData.Result, HeatSinkData.Value, HeatSinkData.Limit_Min, HeatSinkData.Limit_Max, HeatSinkData.Date, HeatSinkData.Operator, HeatSinkData.Note  from [dbo].[HeatSinkData] JOIN [dbo].[Operations] ON HeatSinkData.Operation_ID=Operations.Operation_ID INNER JOIN [dbo].[Main] ON HeatSinkData.HeatSink_ID=main.HeatSink_ID WHERE HeatSinkData.Date BETWEEN '" + datepicker_from.Text + "' AND '" + datepicker_to.Text + "' AND Main.Type = '" + Convert.ToString(tipus_combobox.Text) + "' AND HeatSinkData.Operation_ID='" + ops[i] + "' UNION Select HousingData.Housing_ID as ID, HousingData.Workstation, HousingData.Operation_ID, Operations.Operation_Msg, HousingData.Result, HousingData.Value, HousingData.Limit_Min, HousingData.Limit_Max, HousingData.Date, HousingData.Operator, HousingData.Note  from [dbo].[HousingData] JOIN [dbo].[Operations] ON HousingData.Operation_ID=Operations.Operation_ID INNER JOIN [dbo].[Main] ON HousingData.Housing_ID=main.Housing_ID WHERE HousingData.Date BETWEEN '" + datepicker_from.Text + "' AND '" + datepicker_to.Text + "' AND Main.Type = '" + Convert.ToString(tipus_combobox.Text) + "' AND HousingData.Operation_ID = '" + ops[i] + "'";
+                    if (i == 0)
+                    {
+                        List<string> newColumnData = new List<string>() { "D" };
+                        List<string> lines = File.ReadAllLines(@"C:\temp\" + date + "_" + tipus + ".csv").ToList();
+                        lines[1] += ";Komponens AOI;Forrasztas AOI;PCBA Teszter;HiPOT Teszter;Burn-in Teszter;EOL Teszter";
+                        File.WriteAllLines(@"C:\temp\" + date + "_" + tipus + ".csv", lines);
+                    }
+                    eredmenyek_lekerdezese1(query, result_dgv);
+                    ismetlodeskiszurese();
+                    fpyellenorzese(ops[i]);
+                    tableswitch = true;
+                    ismetlodeskiszurese();
+                    fpyellenorzese(ops[i]);
+                }
+                MessageBox.Show(@"Az eredmények mentve lettek a C:\temp\ mappába a következő fájlnévvel: " + date + "_" + tipus + ".csv");
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message.ToString()); }
+    }
     }
 }
