@@ -1,0 +1,9 @@
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\bin\Debug\FPY_lekerdezo.exe.config
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\bin\Debug\FPY_lekerdezo.exe
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\bin\Debug\FPY_lekerdezo.pdb
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\obj\Debug\FPY_lekerdezo.csprojResolveAssemblyReference.cache
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\obj\Debug\FPY_lekerdezo.Properties.Resources.resources
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\obj\Debug\FPY_lekerdezo.csproj.GenerateResource.Cache
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\obj\Debug\FPY_lekerdezo.exe
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\obj\Debug\FPY_lekerdezo.pdb
+c:\users\bencu\documents\visual studio 2015\Projects\FPY_lekerdezo\FPY_lekerdezo\obj\Debug\FPY_lekerdezo.fpy_lekerdezo.resources
