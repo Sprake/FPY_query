@@ -28,8 +28,9 @@ namespace FPY_lekerdezo
             System.IO.FileInfo file = new System.IO.FileInfo(@"C:\temp\");
             file.Directory.Create();
 
-            datepicker_from.Value = DateTime.Today.AddDays(-1);
-            datepicker_to.Value = DateTime.Today;
+            
+            datepicker_from.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day - 1 , 6, 00, 00);
+            datepicker_to.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 5, 59, 59);
 
             CultureInfo USlanguage = CultureInfo.CreateSpecificCulture("en-US");
             System.Threading.Thread.CurrentThread.CurrentCulture = USlanguage;
